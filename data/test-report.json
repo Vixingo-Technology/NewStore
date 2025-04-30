@@ -1,0 +1,18 @@
+{
+  "timestamp": "2025-08-24T23:16:32.725Z",
+  "system": {
+    "nodeVersion": "v24.4.0",
+    "platform": "darwin",
+    "arch": "x64"
+  },
+  "dependencies": {
+    "playwright": true,
+    "cloudinary": true
+  },
+  "environment": {
+    "cloudinaryConfigured": false
+  },
+  "recommendations": [
+    "Consider setting up Cloudinary for better image hosting"
+  ]
+}
