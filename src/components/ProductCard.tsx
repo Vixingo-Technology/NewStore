@@ -100,10 +100,9 @@ export default function ProductCard({ product }: ProductCardProps) {
           disabled={!product.inStock || isNavigating}
           className={`
             w-full flex items-center justify-center gap-2 px-4 py-3 rounded-xl font-bold text-sm transition-all duration-300 transform hover:scale-105
-            ${
-              product.inStock && !isNavigating
-                ? "bg-gradient-to-r from-yellow-200 to-yellow-300 text-black hover:from-yellow-150 hover:to-yellow-200 shadow-lg hover:shadow-xl"
-                : "bg-gray-700 text-gray-300 cursor-not-allowed"
+            ${product.inStock && !isNavigating
+              ? "bg-gradient-to-r from-yellow-200 to-yellow-300 text-black hover:from-yellow-150 hover:to-yellow-200 shadow-lg hover:shadow-xl"
+              : "bg-gray-700 text-gray-300 cursor-not-allowed"
             }
           `}
         >
@@ -111,8 +110,8 @@ export default function ProductCard({ product }: ProductCardProps) {
           {isNavigating
             ? "Loading..."
             : product.inStock
-            ? "View Details"
-            : "Out of Stock"}
+              ? "View Details"
+              : "Out of Stock"}
         </button>
       </div>
     </div>

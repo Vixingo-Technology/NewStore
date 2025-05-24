@@ -177,12 +177,11 @@ export default function ProductFilters({
                   onClick={() =>
                     handleFilterChange("priceRange", range as [number, number])
                   }
-                  className={`px-3 py-2 text-start text-xs rounded-lg border transition-all duration-300 ${
-                    filters.priceRange[0] === range[0] &&
-                    filters.priceRange[1] === range[1]
+                  className={`px-3 py-2 text-start text-xs rounded-lg border transition-all duration-300 ${filters.priceRange[0] === range[0] &&
+                      filters.priceRange[1] === range[1]
                       ? "bg-yellow-500 text-black border-yellow-500"
                       : "bg-gray-800 text-white border-gray-600 hover:border-yellow-500 hover:bg-gray-700"
-                  }`}
+                    }`}
                 >
                   {label}
                 </button>
@@ -292,18 +291,18 @@ export default function ProductFilters({
             )}
             {(filters.priceRange[0] !== 0 ||
               filters.priceRange[1] !== 1000) && (
-              <div className="flex items-center justify-between bg-gray-800 text-white px-3 py-2 rounded-lg text-sm border border-gray-700">
-                <span>
-                  Price: ${filters.priceRange[0]} - ${filters.priceRange[1]}
-                </span>
-                <button
-                  onClick={() => handleFilterChange("priceRange", [0, 1000])}
-                  className="hover:bg-gray-700 rounded-full p-1 transition-colors"
-                >
-                  <X className="h-3 w-3" />
-                </button>
-              </div>
-            )}
+                <div className="flex items-center justify-between bg-gray-800 text-white px-3 py-2 rounded-lg text-sm border border-gray-700">
+                  <span>
+                    Price: ${filters.priceRange[0]} - ${filters.priceRange[1]}
+                  </span>
+                  <button
+                    onClick={() => handleFilterChange("priceRange", [0, 1000])}
+                    className="hover:bg-gray-700 rounded-full p-1 transition-colors"
+                  >
+                    <X className="h-3 w-3" />
+                  </button>
+                </div>
+              )}
           </div>
         </div>
       )}
