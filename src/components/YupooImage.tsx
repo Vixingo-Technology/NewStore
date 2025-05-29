@@ -51,9 +51,8 @@ export default function YupooImage({
           alt={alt}
           width={width}
           height={height}
-          className={`object-cover transition-opacity duration-300 ${
-            isLoading ? "opacity-0" : "opacity-100"
-          }`}
+          className={`object-cover transition-opacity duration-300 ${isLoading ? "opacity-0" : "opacity-100"
+            }`}
           priority={priority}
           onLoad={() => setIsLoading(false)}
           onError={() => setImageError(true)}
