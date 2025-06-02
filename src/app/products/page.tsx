@@ -194,11 +194,10 @@ function ProductsContent() {
               </div>
             ) : (
               <div
-                className={`grid gap-8 ${
-                  viewMode === "grid"
+                className={`grid gap-8 ${viewMode === "grid"
                     ? "grid-cols-1 md:grid-cols-2 xl:grid-cols-3"
                     : "grid-cols-1"
-                }`}
+                  }`}
               >
                 {filteredProducts.map((product) => (
                   <ProductCard key={product.id} product={product} />
