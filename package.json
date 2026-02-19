@@ -1,44 +1,44 @@
 {
-  "name": "Nuvion",
-  "version": "0.1.0",
-  "private": true,
-  "scripts": {
-    "dev": "next dev",
-    "build": "next build",
-    "start": "next start",
-    "lint": "eslint",
-    "scrape": "node scripts/enhanced-yupoo-scraper.js",
-    "enrich": "node scripts/enrich-products.js",
-    "upload:cloudinary": "node scripts/cloudinary-upload.js",
-    "test:scraping": "node scripts/test-scraping-system.js",
-    "scrape:complete": "npm run scrape && npm run enrich",
-    "scrape:with-cloudinary": "npm run scrape && npm run upload:cloudinary && npm run enrich",
-    "setup:production": "node scripts/production-setup.js"
-  },
-  "dependencies": {
-    "@stripe/stripe-js": "^7.8.0",
-    "cloudinary": "^2.7.0",
-    "clsx": "^2.1.1",
-    "lucide-react": "^0.541.0",
-    "fs": "^0.0.1-security",
-    "next": "15.5.0",
-    "playwright": "^1.55.0",
-    "request": "^2.88.2",
-    "react": "19.1.0",
-    "react-dom": "19.1.0",
-    "node-fetch": "^2.6.7",
-    "stripe": "^18.4.0",
-    "tailwind-merge": "^3.3.1"
-  },
-  "devDependencies": {
-    "@eslint/eslintrc": "^3",
-    "@tailwindcss/postcss": "^4",
-    "@types/node": "^20",
-    "@types/react": "^19",
-    "@types/react-dom": "^19",
-    "eslint": "^9",
-    "eslint-config-next": "15.5.0",
-    "tailwindcss": "^4",
-    "typescript": "^5"
-  }
+    "name": "Nuvion",
+    "version": "0.1.0",
+    "private": true,
+    "scripts": {
+        "dev": "next dev",
+        "build": "next build",
+        "start": "next start",
+        "lint": "eslint",
+        "scrape": "node scripts/enhanced-yupoo-scraper.js",
+        "enrich": "node scripts/enrich-products.js",
+        "upload:cloudinary": "node scripts/cloudinary-upload.js",
+        "test:scraping": "node scripts/test-scraping-system.js",
+        "scrape:complete": "npm run scrape && npm run enrich",
+        "scrape:with-cloudinary": "npm run scrape && npm run upload:cloudinary && npm run enrich",
+        "setup:production": "node scripts/production-setup.js"
+    },
+    "dependencies": {
+        "@stripe/stripe-js": "^7.8.0",
+        "cloudinary": "^2.7.0",
+        "clsx": "^2.1.1",
+        "lucide-react": "^0.541.0",
+        "fs": "^0.0.1-security",
+        "next": "15.3.6",
+        "playwright": "^1.55.0",
+        "request": "^2.88.2",
+        "react": "19.1.0",
+        "react-dom": "19.1.0",
+        "node-fetch": "^2.6.7",
+        "stripe": "^18.4.0",
+        "tailwind-merge": "^3.3.1"
+    },
+    "devDependencies": {
+        "@eslint/eslintrc": "^3",
+        "@tailwindcss/postcss": "^4",
+        "@types/node": "^20",
+        "@types/react": "^19",
+        "@types/react-dom": "^19",
+        "eslint": "^9",
+        "eslint-config-next": "15.5.0",
+        "tailwindcss": "^4",
+        "typescript": "^5"
+    }
 }
