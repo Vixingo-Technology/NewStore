@@ -5,7 +5,7 @@ import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { useCart } from "@/contexts/CartContext";
 import { formatPrice, getDisplayPrice } from "@/lib/utils";
-import { CheckoutFormData } from "@/types";
+import { CheckoutFormData, PaymentMethod } from "@/types";
 import YupooImage from "@/components/YupooImage";
 import {
     ArrowLeft,
@@ -25,9 +25,10 @@ import Link from "next/link";
 
 export default function CheckoutPage() {
     const router = useRouter();
-    const { items, getTotalPrice } = useCart();
+    const { items } = useCart();
     const [hasMounted, setHasMounted] = useState(false);
     const [isProcessing, setIsProcessing] = useState(false);
+    const [paymentMethod, setPaymentMethod] = useState<PaymentMethod>("card");
     const [formData, setFormData] = useState<CheckoutFormData>({
         email: "",
         firstName: "",
@@ -81,13 +82,14 @@ export default function CheckoutPage() {
                 body: JSON.stringify({
                     items,
                     customerEmail: formData.email,
+                    paymentMethod,
                 }),
             });
 
             const data = await response.json();
 
             if (response.ok && data.url) {
-                // Redirect to Stripe Checkout
+                // Redirect to the selected payment provider
                 window.location.href = data.url;
             } else {
                 throw new Error(
@@ -105,9 +107,9 @@ export default function CheckoutPage() {
     };
 
     return (
-        <div className="min-h-screen bg-gradient-to-br from-black via-gray-900 to-black">
+        <div className="min-h-screen bg-linear-to-br from-black via-gray-900 to-black">
             {/* Header */}
-            <div className="bg-gradient-to-br from-gray-900 to-black border-b border-gray-700">
+            <div className="bg-linear-to-br from-gray-900 to-black border-b border-gray-700">
                 <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
                     <div className="flex items-center justify-between">
                         <Link
@@ -136,7 +138,7 @@ export default function CheckoutPage() {
                     <div className="lg:col-span-2 space-y-8">
                         <form onSubmit={handleSubmit}>
                             {/* Customer Information */}
-                            <div className="bg-gradient-to-br from-gray-800 to-gray-900 rounded-3xl shadow-xl border border-gray-700 p-8">
+                            <div className="bg-linear-to-br from-gray-800 to-gray-900 rounded-3xl shadow-xl border border-gray-700 p-8">
                                 <div className="flex items-center gap-3 mb-6">
                                     <div className="w-10 h-10 bg-yellow-500/20 rounded-full flex items-center justify-center">
                                         <User className="h-5 w-5 text-yellow-200" />
@@ -234,7 +236,7 @@ export default function CheckoutPage() {
                             </div>
 
                             {/* Shipping Address */}
-                            <div className="bg-gradient-to-br from-gray-800 to-gray-900 rounded-3xl mt-6 shadow-xl border border-gray-700 p-8">
+                            <div className="bg-linear-to-br from-gray-800 to-gray-900 rounded-3xl mt-6 shadow-xl border border-gray-700 p-8">
                                 <div className="flex items-center gap-3 mb-6">
                                     <div className="w-10 h-10 bg-green-500/20 rounded-full flex items-center justify-center">
                                         <MapPin className="h-5 w-5 text-green-400" />
@@ -359,12 +361,82 @@ export default function CheckoutPage() {
                                     </div>
                                 </div>
                             </div>
+
+                            {/* Payment Method */}
+                            <div className="bg-linear-to-br from-gray-800 to-gray-900 rounded-3xl mt-6 shadow-xl border border-gray-700 p-8">
+                                <div className="flex items-center gap-3 mb-6">
+                                    <div className="w-10 h-10 bg-yellow-500/20 rounded-full flex items-center justify-center">
+                                        <CreditCard className="h-5 w-5 text-yellow-200" />
+                                    </div>
+                                    <h2 className="text-xl font-bold text-yellow-200">
+                                        Payment Method
+                                    </h2>
+                                </div>
+
+                                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                    <label
+                                        className={`flex cursor-pointer items-start gap-4 rounded-2xl border-2 p-4 transition-all duration-300 ${
+                                            paymentMethod === "card"
+                                                ? "border-yellow-400 bg-yellow-400/10"
+                                                : "border-gray-700 bg-gray-800 hover:border-gray-500"
+                                        }`}
+                                    >
+                                        <input
+                                            type="radio"
+                                            name="paymentMethod"
+                                            value="card"
+                                            checked={paymentMethod === "card"}
+                                            onChange={() =>
+                                                setPaymentMethod("card")
+                                            }
+                                            className="mt-1 h-4 w-4 accent-yellow-400"
+                                        />
+                                        <div>
+                                            <p className="font-semibold text-white">
+                                                Card
+                                            </p>
+                                            <p className="mt-1 text-sm text-gray-300">
+                                                Pay securely with Stripe
+                                                checkout.
+                                            </p>
+                                        </div>
+                                    </label>
+
+                                    <label
+                                        className={`flex cursor-pointer items-start gap-4 rounded-2xl border-2 p-4 transition-all duration-300 ${
+                                            paymentMethod === "bkash"
+                                                ? "border-pink-400 bg-pink-400/10"
+                                                : "border-gray-700 bg-gray-800 hover:border-gray-500"
+                                        }`}
+                                    >
+                                        <input
+                                            type="radio"
+                                            name="paymentMethod"
+                                            value="bkash"
+                                            checked={paymentMethod === "bkash"}
+                                            onChange={() =>
+                                                setPaymentMethod("bkash")
+                                            }
+                                            className="mt-1 h-4 w-4 accent-pink-500"
+                                        />
+                                        <div>
+                                            <p className="font-semibold text-white">
+                                                bKash
+                                            </p>
+                                            <p className="mt-1 text-sm text-gray-300">
+                                                Complete payment through bKash
+                                                redirect checkout.
+                                            </p>
+                                        </div>
+                                    </label>
+                                </div>
+                            </div>
                         </form>
                     </div>
 
                     {/* Order Summary */}
                     <div className="lg:col-span-1">
-                        <div className="bg-gradient-to-br from-gray-800 to-gray-900 rounded-3xl shadow-xl border border-gray-700 p-8 sticky top-8">
+                        <div className="bg-linear-to-br from-gray-800 to-gray-900 rounded-3xl shadow-xl border border-gray-700 p-8 sticky top-8">
                             <div className="flex items-center gap-3 mb-6">
                                 <div className="w-10 h-10 bg-yellow-500/20 rounded-full flex items-center justify-center">
                                     <ShoppingBag className="h-5 w-5 text-yellow-200" />
@@ -381,7 +453,7 @@ export default function CheckoutPage() {
                                         key={`${item.id}-${item.size}`}
                                         className="flex gap-4 p-4 bg-gray-800 rounded-xl border border-gray-700"
                                     >
-                                        <div className="w-16 h-16 bg-gray-700 rounded-lg flex-shrink-0 overflow-hidden">
+                                        <div className="w-16 h-16 bg-gray-700 rounded-lg shrink-0 overflow-hidden">
                                             <YupooImage
                                                 src={item.product.images[0]}
                                                 alt={item.product.title}
@@ -463,7 +535,7 @@ export default function CheckoutPage() {
                             <button
                                 onClick={handleSubmit}
                                 disabled={isProcessing}
-                                className="w-full bg-gradient-to-r from-yellow-200 to-yellow-100 text-black py-4 px-6 rounded-2xl font-bold hover:from-yellow-200 hover:to-yellow-100 transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-xl mt-6 flex items-center justify-center gap-3 disabled:opacity-50 disabled:cursor-not-allowed"
+                                className="w-full bg-linear-to-r from-yellow-200 to-yellow-100 text-black py-4 px-6 rounded-2xl font-bold hover:from-yellow-200 hover:to-yellow-100 transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-xl mt-6 flex items-center justify-center gap-3 disabled:opacity-50 disabled:cursor-not-allowed"
                             >
                                 {isProcessing ? (
                                     <>
@@ -476,7 +548,9 @@ export default function CheckoutPage() {
                                 ) : (
                                     <>
                                         <CreditCard className="h-5 w-5" />
-                                        Proceed to Payment
+                                        {paymentMethod === "card"
+                                            ? "Proceed to Card Payment"
+                                            : "Proceed to bKash Payment"}
                                     </>
                                 )}
                             </button>
@@ -486,7 +560,8 @@ export default function CheckoutPage() {
                                 <div className="flex items-center gap-2 text-sm text-gray-300">
                                     <Lock className="h-4 w-4 text-green-600" />
                                     <span>
-                                        Secure checkout powered by Stripe
+                                        Secure checkout powered by Stripe and
+                                        bKash
                                     </span>
                                 </div>
                                 <div className="flex items-center gap-2 text-sm text-gray-300">
